@@ -1,10 +1,3 @@
-spring:
-  main:
-    banner-mode: console
-  security:
-    user:
-      name: hlooc
-      password: admin
 server:
   port: 8761
 #  servlet:
@@ -13,23 +6,39 @@ eureka:
 #  server:
 #    enable-self-preservation: false
   instance:
-    leaseRenewalIntervalInSeconds: 10
     health-check-url-path: /actuator/health
+#    status-page-url-path: /actuator/info
+    home-page-url-path: /
     hostname: localhost
-    ip-address: true
+    prefer-ip-address: true
     metadata-map:
-      user.name: hlooc         #These two are needed so that the server
-      user.password: admin
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
   client:
     register-with-eureka: false
     fetch-registry: false
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+spring:
+  main:
+    banner-mode: console
+  security:
+    user:
+      name: hlooc
+      password: admin
+  profiles:
+    active: native
+  boot:
+    admin:
+      client:
+        url: http://localhost:8040
+        username: hlooc
+        password: admin
 management:
   endpoints:
     web:
       exposure:
-        include: "*"  #<2>
+        include: "*"
   endpoint:
     health:
       show-details: ALWAYS
