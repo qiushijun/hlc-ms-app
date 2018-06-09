@@ -1,0 +1,69 @@
+server:
+  port: 8070
+  
+eureka:
+  instance:
+    metadata-map:
+      user.name: ${security.user.name}
+      user.password: ${security.user.password}
+
+security:
+  user:
+    name: user
+    password: password
+
+spring:
+  datasource:
+    aas:
+      url: jdbc:oracle:thin:@172.17.0.6:1521:xe
+      type: com.alibaba.druid.pool.DruidDataSource
+      driverClassName: oracle.jdbc.driver.OracleDriver
+      username: aas
+      password: aas
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat
+    his:
+      url: jdbc:oracle:thin:@172.17.0.6:1521:xe
+      type: com.alibaba.druid.pool.DruidDataSource
+      driverClassName: oracle.jdbc.driver.OracleDriver
+      username: his
+      password: his
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat
+  jpa:
+    database: oracle
+    show-sql: true
+  aop:
+    proxy-target-class: true
+com:
+  sunyard:
+    pbcLogin: http://127.0.0.1
+    pbcUrl: http://127.0.0.1/shcreditunion/queryAction.do?username=${NAME}&certype=${TYPE}&cercode=${NBR}&queryreason=${CREDIT_TYPE}&vertype=30&idauthflag=${idauthflag}&policetype=0
+    pbcSavePath: /home/qsj/temp/
+    druidAllow: 127.0.0.1
+    druidDeny: 172.17.0.6
+logging:
+  file: logs/ucs-web.log
+  level: info

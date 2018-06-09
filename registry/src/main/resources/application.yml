@@ -1,0 +1,35 @@
+spring:
+  main:
+    banner-mode: console
+  security:
+    user:
+      name: hlooc
+      password: admin
+server:
+  port: 8761
+#  servlet:
+#    context-path: /registry
+eureka:
+#  server:
+#    enable-self-preservation: false
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+    hostname: localhost
+    ip-address: true
+    metadata-map:
+      user.name: hlooc         #These two are needed so that the server
+      user.password: admin
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  #<2>
+  endpoint:
+    health:
+      show-details: ALWAYS

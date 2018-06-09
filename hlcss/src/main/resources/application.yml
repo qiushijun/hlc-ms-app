@@ -1,0 +1,45 @@
+server:
+  port: 8085
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+    status-page-url-path: /actuator/info
+    hostname: localhost
+    prefer-ip-address: true
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+  client:
+    registryFetchIntervalSeconds: 5
+    service-url:
+      defaultZone: http://hlooc:${REGISTRY_SERVER_PASSWORD:admin}@111.231.119.81:8761/eureka/
+#      defaultZone: http://hlooc:${REGISTRY_SERVER_PASSWORD:admin}@10.60.32.11:8761/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+spring:
+  main:
+    banner-mode: console
+  boot:
+    admin:
+      client:
+        url: http://118.25.26.236:8040
+        username: hlooc
+        password: admin
+  security:
+    user:
+      name: hlooc
+      password: admin
+  profiles:
+    active: native
+
+
+
+

@@ -1,0 +1,61 @@
+server:
+  context-path: /uaa
+  port: 5000
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@172.17.0.6:1521:xe
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: oracle.jdbc.driver.OracleDriver
+    username: aas
+    password: aas
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat
+  jpa:
+    database: oracle
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  redis:
+    host: 127.0.0.1
+    database: 0
+jwt:
+  header: Authorization
+  secret: sydXykAas
+  expiration: 28800
+  tokenHead: "Bearer "
+  route:
+    authentication:
+      path: login
+      refresh: refresh
+      register: "login/register"
+
+security:
+  oauth2:
+    resource:
+      filter-order: 3
+
+management:
+  security:
+    enabled: false
+  context-path: /mgmt
+
+eureka:
+  instance:
+    health-check-url-path: ${server.context-path}${management.context-path}/health
+    status-page-url-path: ${server.context-path}${management.context-path}/info
+    metadata-map:
+      management.context-path: ${server.context-path}${management.context-path}
+logging:
+  file: logs/aas-auth-web.log

@@ -1,0 +1,53 @@
+server:
+  port: 8888
+#  servlet:
+#    context-path: /config
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    metadata-map:
+     user.name: ${spring.security.user.name}
+     user.password: ${spring.security.user.password}
+  client:
+    service-url:
+      defaultZone: http://hlooc:${REGISTRY_SERVER_PASSWORD:admin}@111.231.119.81:8761/eureka/
+
+spring:
+  main:
+    banner-mode: console
+  security:
+    user:
+      name: hlooc
+      password: admin
+  profiles:
+    active: native
+  boot:
+    admin:
+      client:
+        url: http://monitor.aasweb.cn
+        username: hlooc
+        password: admin
+        instance:
+          service-url: http://127.0.0.1:8888
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: /home/hlooc/workspace/java/springboot2.0/hlc-ms-app/config-repo
+#         git:
+#           uri: https://github.com/qiushijun/spring-boot-cloud
+#           search-paths: config-repo
+  rabbitmq:
+    host: 127.0.0.1
+    username: hlooc
+    password: admin
+    virtual-host: /app

@@ -1,0 +1,44 @@
+eureka:
+  instance:
+    hostname: 111.231.119.81
+    prefer-ip-address: true
+  client:
+    service-url:
+#      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@172.17.0.13:8761/registry/eureka/,http://user:${REGISTRY_SERVER_PASSWORD:password}@172.17.0.6:${server.port}/registry/eureka/
+      defaultZone: http://user:${REGISTRY_SERVER_PASSWORD:password}@111.231.119.81:8761/eureka/
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+
+ribbon:
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
+
+spring:
+  rabbitmq:
+    host: 172.17.0.6
+    username: qsj
+    password: admin
+    virtual-host: /aas
+  sleuth:
+    sampler:
+      percentage: 1
+    integration:
+      enabled: false
+    scheduled:
+      skip-pattern: "^org.*HystrixStreamTask$"
+
+authserver:
+    hostname: 172.17.0.13
+    port: 5000
+    contextPath: /uaa
+
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://${authserver.hostname}:${authserver.port}${authserver.contextPath}/current
